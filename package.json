@@ -2,11 +2,11 @@
   "name": "server",
   "version": "0.0.1",
   "description": "Studio",
-  "main": "src",
+  "main": "app.py",
   "author": "oscarbahamonde",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "uvicorn src:app --host 0.0.0.0 --port 80 --reload"
+    "dev": "uvicorn app:app --host 0.0.0.0 --port 80 --reload"
   }
 }

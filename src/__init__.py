@@ -1,26 +1,21 @@
 from fastapi import FastAPI, Request
-from starlette.templating import Jinja2Templates
-from starlette.middleware.cors import CORSMiddleware
-from .cognito import auth
-from .s3 import s3_router
-from .ses import ses_router
+from .contact import ses as contact
+from .drive import s3 as drive
+from .auth import init_auth
+from .db import init_db
+from fastapi.templating import Jinja2Templates
+from starlette.staticfiles import StaticFiles
 
-app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
-templates = Jinja2Templates(directory='templates')
+def init_app():
+    _app=FastAPI()
+    app = init_auth(init_db(_app))
+    app.include_router(contact, prefix="/contact")
+    app.include_router(drive, prefix="/drive")
+    @app.get("/")
+    async def root(request: Request):
+        return templates.TemplateResponse("index.html", {"request": request})
+    app.mount("/hhmc", StaticFiles(directory="templates"), name="static")
+    return app
 
-app.include_router(auth, prefix='/auth')
-app.include_router(s3_router, prefix='/s3')
-app.include_router(ses_router, prefix='/ses')
-
-@app.get('/')
-async def root(req:Request):
-    return templates.TemplateResponse('index.html', {'request': req})
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=['*'],
-    allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
-)

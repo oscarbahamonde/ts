@@ -1,0 +1,28 @@
+{
+  "name": "app",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "aws s3 sync dist/ s3://oscarbahamonde"
+  },
+  "dependencies": {
+    "@iconify/vue": "^3.2.1",
+    "@mdi/font": "^6.6.96",
+    "axios": "^0.27.2",
+    "daisyui": "^2.14.3",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.15"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.1",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.13",
+    "sass": "^1.51.0",
+    "scss": "^0.2.4",
+    "tailwindcss": "^3.0.24",
+    "vite": "^2.9.7"
+  }
+}
